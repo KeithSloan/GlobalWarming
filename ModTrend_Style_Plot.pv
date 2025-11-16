@@ -1,0 +1,31 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Example wavelength range (µm)
+wavelength = np.linspace(4, 25, 1000)
+
+# Simulated emission spectra for main GHGs (simplified)
+def co2_spectrum(lam):
+    return 240 - 200*np.exp(-0.5*((lam-15)/1.5)**2)
+
+def h2o_spectrum(lam):
+    return 240 - 150*np.exp(-0.5*((lam-6)/2)**2) - 50*np.exp(-0.5*((lam-20)/3)**2)
+
+def ch4_spectrum(lam):
+    return 240 - 30*np.exp(-0.5*((lam-7.7)/0.5)**2)
+
+# Total outgoing spectrum
+total_spectrum = co2_spectrum(wavelength) + h2o_spectrum(wavelength) + ch4_spectrum(wavelength)
+
+plt.figure(figsize=(12,6))
+plt.plot(wavelength, co2_spectrum(wavelength), label="CO2")
+plt.plot(wavelength, h2o_spectrum(wavelength), label="H2O")
+plt.plot(wavelength, ch4_spectrum(wavelength), label="CH4")
+plt.plot(wavelength, total_spectrum, label="Total OLR", color="black", linewidth=2)
+plt.xlabel("Wavelength (µm)")
+plt.ylabel("Outgoing Longwave Radiation (W/m²/µm)")
+plt.title("Earth Outgoing Longwave Spectrum – Contribution by Greenhouse Gas")
+plt.legend()
+plt.grid(True)
+plt.show()
+
